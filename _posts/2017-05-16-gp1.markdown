@@ -1,12 +1,26 @@
 ---
 layout: post
-title:  "Gaussian processes for physics, part 1"
+title:  "Gaussian processes for physics (1)"
 date:   2017-05-16 12:00:00 -0500
 categories: projects
 ---
 
-{% include image.html url="/assets/GP/gp_crop.png" %}{:width="350px" %}
-
+{% include image.html url="/assets/GP/gp_crop.png" %}{:width="400px" %}
 &nbsp;
 
+Back in 2014, my [thesis project](https://arxiv.org/abs/1704.06142) was just in its infancy.  The goal was to measure the mass of the *top quark* by analyzing its decay pattern observed in the [CMS detector](https://cms.cern).  This had been done before, but we had a few ideas on how to improve the precision by about 25%.
 
+During that time, I spent some time hunting around for interesting techniques and ideas that I could use in the project.  And that's when I first came across **Gaussian process regression**, aka ["kriging"](https://en.wikipedia.org/wiki/Kriging), which had produced some beautiful results in the [atmospheric sciences](http://learning.eng.cam.ac.uk/carl/mauna), [astronomy](https://speakerdeck.com/dfm/an-astronomers-introduction-to-gaussian-processes-v2), and many other exciting areas.
+
+Gaussian processes have experienced somewhat of a revival in scientific research because of their effectiveness in modeling multidimensional distributions.  This is precisely the kind of modeling that was central in my thesis project, so decided to see how GPs would perform.
+
+Here's the short version of my modeling problem:
+
+{% include image.html url="/assets/GP/sensitivity_mt_mbl.pdf" description="<em>arXiv:1704.06142</em>" %}{:width="500px" %}
+&nbsp;
+
+Ignoring the red line for now (I'll talk about it in a later post!), note the evolution of the gray shape as we increase the $$ M_t^{MC} $$ parameter.  That parameter is the top quark mass, and the distribution slowly shifts to the right as the mass increases.  This dependence allows us to precisely determine the value of the top quark mass in Large Hadron Collider data.  In order to take advantage of this dependence, we need to model the *shape* of this distribution, as well as its *dependence* on the $$ M_t^{MC} $$ parameter.
+
+This is where Gaussian process regression becomes super useful, and it has grown into one of the central features of our measurement.  In fact, we used GPs to model the $$ M_{bl} $$ distribution shown above, and its evolution as a function of two parameters *simultaneously*.
+
+In my next post, I'll talk about some of the theory behind Gaussian process regression, and why it's so useful for statistical modeling.  I'll also say more about how we used GPs in our measurement of the top quark mass.  Stay tuned!
