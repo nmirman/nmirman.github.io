@@ -4,15 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+![profilepic](/assets/IMG_0996_3.jpg){:class="img-responsive"}{:height="250px"}
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+My name is Nathan Mirman, and I just finished my PhD in particle physics from Cornell University.  I was a member of the [CMS experiment](https://cms.cern) positioned on the Large Hadron Collider at CERN.  In my [thesis project][topmass], I employed a *Gaussian process* machine learning technique to measure the mass of the top quark.  I love mining large datasets for meaningful patterns and insights.  Feel free to peruse my blog for public datasets and machine learning applications that I've been thinking about recently.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+[topmass]: https://arxiv.org/abs/1704.06142
