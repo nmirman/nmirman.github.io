@@ -2,7 +2,7 @@
 layout: post
 title:  "Russian Housing Market"
 date:   2017-06-29 15:27:48 -0500
-categories: analysis kaggle
+categories: projects
 ---
 
 {% include image.html url="/assets/P9110095_2.jpg" description="<em>Viktor Pivovarov, 1994</em>" %}{:width="350px" %}
