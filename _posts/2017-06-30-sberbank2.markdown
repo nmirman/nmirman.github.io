@@ -1,0 +1,89 @@
+---
+layout: post
+title:  "Russian Housing Market (2)"
+date:   2017-06-30 13:12:44 -0500
+categories: projects
+---
+
+Welcome back!  In the [previous post]({{ site.baseurl }}{% link _posts/2017-06-29-sberbank1.markdown %}), we introduced the [Sberbank Russian Housing Market](https://www.kaggle.com/c/sberbank-russian-housing-market) dataset hosted on Kaggle, and talked about some of the main features (and interesting anomalies!) in the dataset.  Now we're ready to do some modeling using these features.  Continue reading below, or find more details in [this jupyter notebook](https://github.com/nmirman/sberbank/blob/master/analysis/Sberbank.ipynb).
+
+
+## Geographic pricing interpolation
+
+A very important effect to capture in our pricing model is the dependence of *price* on the *location* of each property.  Actually what we care about is *price/floor area*, since that value will be much more constant between individual properties.  We expect certain areas of the city to be more expensive *per* $$ m^2 $$ than others, and to model this effect we interpolate the *price/floor area* to get an average value in the vicinity of each property.
+
+The interpolation scheme is based on an exponential function that decreases with distance.  The value of the exponential becomes a weight, which enters into a weighted average of *price/floor area*.
+
+### Interpolation results
+
+We conduct the interpolation for investment and owner-occupier properties separately -- that way, the anomalous investment prices don't affect the owner-occupier price interpolation.  Calculating the interpolated *price/floor area* for each property gives us the map below:
+
+![png](/assets/Sberbank_files/Sberbank_25_0.png)
+
+
+We can see a general trend of decreasing *price/floor area* as we move away from the city center.  (At the very center, we seem to have some very inexpensive apartments.  This is just another anomaly in the data, caused by properties that are erroneously located at the Kremlin!)
+
+
+## Modeling with XGBoost
+
+To conduct price prediction, we employ the [XGBoost](http://xgboost.readthedocs.io/en/latest/) supervised learning algorithm.  Why XGBoost?  It provides the benefits of *gradient tree boosting*, performs well on sparse data, includes tools for cross validation, and conveniently runs with parallelization on my local machine!
+
+We determine the optimal *hyperparameter* values using a 10-fold cross validation scheme.  The optimal algorithm uses 582 boost rounds, and achieves a cross-validation root mean square error of about 2.6 million rubles.
+
+To see which features are the most predictive, we can look at their F-scores:
+
+![png](/assets/Sberbank_files/Sberbank_32_1.png)
+
+Here are the scores for the top twenty features:
+
+                        Feature         Importance
+                  -----------------------------------
+                        full_sq         967
+                   price_interp         847
+                     psq_interp         535
+                       kitch_sq         485
+                        life_sq         459
+                          floor         429
+                      max_floor         315
+                     build_year         313
+                 month_year_cnt         220
+                  week_year_cnt         189
+                   rel_kitch_sq         188
+                kindergarten_km         171
+                      room_size         167
+                          month         130
+                      rel_floor         126
+                  green_zone_km         122
+                 metro_min_avto         121
+    public_transport_station_km         119
+                   big_road2_km         118
+                          state         117
+
+
+As expected, the interpolated price (*price_interp*) and interpolated price per floor area (*psq_interp*) are at the top of the list, as well as *full_sq* (the floor area), *life_sq* (the living area), and *kitch_sq* (the kitchen area).  The month of purchase is also pretty important, as are the proximity to education and transportation, and features of the apartment building.
+
+### Results
+
+The XGBoost model above was trained on data from August 2011 to June 2014.  The last year of data (July 2014 to June 2015) was used as an independent test set to evaluate our price prediction algorithm.
+
+We begin by looking at the *residuals*, defined by:
+
+$$ r = \frac{y_{pred} - y_{true}}{y_{true}} $$,
+
+where $$r$$ is the residual, $$ y_{pred} $$ is the predicted price, and $$ y_{true} $$ is the true price.
+
+![png](/assets/Sberbank_files/Sberbank_39_1.png)
+
+Most of the residuals are between -1 and 1, as expected.  However, there is a large tail going into values up to 15.  This is to be investigated further -- it probably has to do with the anomalous investment sale prices.
+
+In the independent test set, our *root mean square error* is about 2.7 million rubles, where the mean true sale price is 7.8 million rubles.  That indicates that our prediction algorithm is accurate to about 35% on average.  This number may be improved by targeting the tail of the residual spectrum above.
+
+Let's look at the dependence of the residuals on some of the main features of our model.
+
+![png](/assets/Sberbank_files/Sberbank_41_0.png)
+
+These plots show no major correlations, which indicates that the XGBoost model is reasonably unbiased as a function of these variables, and captures most of the available statistical information.  The plot of *residuals* versus *interpolated price* (lower right) may have some subtle structure -- perhaps something to be investigated further.
+
+The largest residuals are found at low *true price*, which may point to anomalous investment prices as the culprit.  To improve our model, it may be worth while to think some more about these anomalous prices and how to deal with them.
+
+In conclusion, our model is able to predict real estate sale prices in Moscow to within about 35% on average.  Reducing the prediction error will require a more in-depth analysis of various anomalies in the dataset, which can be addressed with improved cleaning and/or more sophisticated modeling.  The price has a high dependence on features like *floor area* and *location*, and we were able to take advantage of this in the interpolation and XGBoost part of our model.  Overall, it was interesting to think about the Russian housing market, and it will be interesting to see how the market evolves in the coming decade! 

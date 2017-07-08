@@ -1,0 +1,84 @@
+---
+layout: post
+title:  "Russian Housing Market (1)"
+date:   2017-06-29 15:27:48 -0500
+categories: projects
+---
+
+{% include image.html url="/assets/P9110095_2.jpg" description="<em>Viktor Pivovarov, 1994</em>" %}{:width="350px" %}
+
+&nbsp;
+
+In September of 2015 I attended the [Large Hadron Collider Physics Conference](http://lhcp2015.com) in St. Petersburg, Russia, where I presented [progress](https://arxiv.org/abs/1512.02244) on top quark measurements at CERN.  Some very exciting developments, but I'll leave that for another post!
+
+Afterwards, I visited some family in Moscow and stayed in their classic 1960s apartment building, known as a ["khrushchyovka"](https://en.wikipedia.org/wiki/Khrushchyovka).  These Soviet-construction apartment buildings are now slowly being phased out, and my hosts told me about their experiences looking for new housing during a period of economic uncertainty in Russia.
+
+This year, when I learned that Sberbank was hosting a [Russian Housing Market Competition on Kaggle](https://www.kaggle.com/c/sberbank-russian-housing-market), I couldn't *not* join.  Sberbank provided a dataset of real estate sales from August 2011 to June 2015, and challenged participants to develop a price prediction algorithm based on a number of real estate, geographic, and macro-economic features.  To see how I approached this problem, read below!  Or check out [this jupyter notebook](https://github.com/nmirman/sberbank/blob/master/analysis/Sberbank.ipynb) for more details.
+
+
+## Dataset features
+
+The dataset provided by Sberbank includes real estate sales in Moscow during the period from August 2011 to June 2015.  Information is provided on the real estate property, the "raion" (district) where it is located, and the state of the Russian economy.  Here is a summary (in total there are several hundred features):
+
+
+#### Real estate
+  * Area of property, living area, kitchen area
+  * Number of rooms
+  * Floor of property, and maximum floor of apartment building
+  * Wall material
+  * Build year
+  * Condition of property
+  * Sale type: for investment, or owner-occupier
+  * Price of sale
+
+#### Location and district
+  * District name
+  * Population of district by age, gender, and employment
+  * Number of buildings by build year
+  * Number and distance to closest cafe, shopping mall, transportation hub, green zone, power plant
+  * Distance to major roads and city center
+  * Distance to education centers
+  * Number of major cultural centers and tourist attractions in district
+
+#### Economy
+  * GDP stats
+  * Foreign exchange rates
+  * Brent crude oil
+  * Mortgage rates
+  * Size of labor force and unemployment rate
+  * Rent prices by apartment size
+
+In my analysis, I used the 300 available real estate and location features, but left out macro-economic information.  With about 30,000 entries in the dataset, there probably isn't enough data to utilize the macro-economic features without overfitting.
+
+A quick look at the dataset reveals a number of entries with missing features, typos, or nonsensical values that are just meant to be placeholders.  I made sure to do some rudimentary cleaning before moving forward with the analysis.
+  
+
+## First look
+
+We begin by looking at how the *price* of a property depends on its *location*.
+
+![png](/assets/Sberbank_files/Sberbank_6_0.png)
+
+There is a significant variation in the median price by location, as we can see by the nine quantiles color-coded in the map above.  The most expensive properties are located near the city center and to its West, with a median price around nine million rubles.  The median price generally decreases as we move away from the center, where it falls below five million rubles.
+
+Distributions of the *price* and *floor area* of the properties are shown below.  The *floor area* is one of the most predictive features in the dataset, and we take advantage of that when developing our model below.
+
+![png](/assets/Sberbank_files/Sberbank_8_0.png)
+
+
+## Anomalous values
+
+Some entries in this dataset have unrealistic or missing values.  Examples include properties with a floor area less than 10 $$ m^2 $$, or apartments on a floor above the building's maximum floor.  Some values are set to 1 or 0 as placeholders for NaN.  These values were addressed by either filling in missing values using a linear interpolation, or leaving them as NaN.  The XGBoost model employed below has automatic handling of NaN values.
+
+A particularly interesting example of anomalous values occurs in investment property sales -- keep reading for further details!
+
+### Example: investment sale prices
+An interesting artifact shows up if we look at the low end of the price spectrum for sales marked as "Investment" rather than "Owner-Occupier".  There seems to be an excess of sales with prices of exactly 1, 2, or 3 million rubles.
+
+![png](/assets/Sberbank_files/Sberbank_10_0.png)
+
+It turns out that prices are sometimes artificially reduced in investment purchases for tax purposes.  That means that the "true" price of these properties may be significantly higher.
+
+This effect is likely to have some effect on our modeling of sale prices.  To address it, we keep these sales in the dataset for now, but provide some distinction between investment and owner-occupier properties when training our model.
+
+With this and other anomalies addressed, we will move on to statistical modeling and price prediction in the [next post]({{ site.baseurl }}{% link _posts/2017-06-30-sberbank2.markdown %}).  See you there!
