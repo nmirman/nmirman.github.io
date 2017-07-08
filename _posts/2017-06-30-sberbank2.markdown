@@ -12,7 +12,15 @@ Welcome back!  In the [previous post]({{ site.baseurl }}{% link _posts/2017-06-2
 
 A very important effect to capture in our pricing model is the dependence of *price* on the *location* of each property.  Actually what we care about is *price/floor area*, since that value will be much more constant between individual properties.  We expect certain areas of the city to be more expensive *per* $$ m^2 $$ than others, and to model this effect we interpolate the *price/floor area* to get an average value in the vicinity of each property.
 
-The interpolation scheme is based on an exponential function that decreases with distance.  The value of the exponential becomes a weight, which enters into a weighted average of *price/floor area*.
+The interpolation scheme is based on an exponential function that decreases with distance.  The value of the exponential becomes a weight, which enters into a weighted average of *price/floor area*.  For each property, the interpolated *price/floor area* is given by:
+
+$$ psq = \sum_i{ w_i \frac{(price)_i}{(floor\, area)_i} } \,/\, \sum_i{ w_i } $$,
+
+where the sum runs over all surrounding properties.  The weights are given by:
+
+$$ w_i = e^{-\Delta d_i \, /\, (tol)} $$,
+
+where $$ \Delta d_i $$ is the distance between the properties (in degrees latitude/longitude), and $$ tol $$ is a tolerance parameter controlling how quickly the weights $$ w_i $$ decay with increasing distance.  The value of $$ tol $$ is found using a grid search optimizing for the root mean square error between *psq* and the true *price/floor area* of the property.
 
 ### Interpolation results
 
