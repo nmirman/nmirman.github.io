@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "Gaussian processes for physics (2)"
+date:   2017-05-25 12:00:00 -0500
+categories: projects
+---
+
+In [part 1]({{ site.baseurl }}{% link _posts/2017-05-16-gp1.markdown %}) of this post, I talked about an application for Gaussian processes in my [thesis project](https://arxiv.org/abs/1704.06142).  Let's continue with some of the theory behind GPs.
+
+First, I'll tell you what's going on in this plot:
+
+{% include image.html url="/assets/GP/gp_randGlarge.pdf" %}{:width="400px" %}
+
+These are functions randomly drawn from a prior distribution of functions.  They have a characteristic *amplitude*, and a characteristic *lengthscale* of variations.  These properties are determined entirely by the function prior.
