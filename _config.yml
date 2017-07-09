@@ -31,7 +31,7 @@ linkedin_username: nathan-mirman
 markdown: kramdown
 theme: minima
 #theme: jekyll-theme-minimal
-plugins:
+plugins_dir:
   - jekyll-feed
 
 # Exclude from processing.
