@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Russian Housing Market (1)"
-date:   2017-06-29 15:27:48 -0500
+date:   2017-07-08 15:27:48 -0500
 categories: projects
 ---
 
@@ -81,4 +81,4 @@ It turns out that prices are sometimes artificially reduced in investment purcha
 
 This effect is likely to have some effect on our modeling of sale prices.  To address it, we keep these sales in the dataset for now, but provide some distinction between investment and owner-occupier properties when training our model.
 
-With this and other anomalies addressed, we will move on to statistical modeling and price prediction in the [next post]({{ site.baseurl }}{% link _posts/2017-06-30-sberbank2.markdown %}).  See you there!
+With this and other anomalies addressed, we will move on to statistical modeling and price prediction in the [next post]({{ site.baseurl }}{% link _posts/2017-07-08-sberbank2.markdown %}).  See you there!

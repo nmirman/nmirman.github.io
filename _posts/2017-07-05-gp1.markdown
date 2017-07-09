@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Gaussian processes for physics (1)"
-date:   2017-05-16 12:00:00 -0500
+date:   2017-07-05 15:00:00 -0500
 categories: projects
 ---
 
@@ -25,4 +25,4 @@ Ok, many of these details aren't relevant to the topic of Gaussian processes.  L
 
 This is where Gaussian process regression becomes super useful, and it has grown into one of the central features of our measurement.  In fact, we used GPs to model the $$ M_{bl} $$ distribution shown above, and its evolution as a function of two parameters *simultaneously*.
 
-In my [next post]({{ site.baseurl }}{% link _posts/2017-05-25-gp2.markdown %}), I'll talk about some of the theory behind Gaussian process regression, and why it's so useful for statistical modeling.  I'll also say more about how we used GPs in our measurement of the top quark mass.  Stay tuned!
+In my [next post]({{ site.baseurl }}{% link _posts/2017-07-06-gp2.markdown %}), I'll talk about some of the theory behind Gaussian process regression, and why it's so useful for statistical modeling.  I'll also say more about how we used GPs in our measurement of the top quark mass.  Stay tuned!
