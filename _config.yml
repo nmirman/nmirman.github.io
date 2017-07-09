@@ -30,7 +30,8 @@ linkedin_username: nathan-mirman
 # Build settings
 markdown: kramdown
 theme: minima
-gems:
+#theme: jekyll-theme-minimal
+plugins:
   - jekyll-feed
 
 # Exclude from processing.
