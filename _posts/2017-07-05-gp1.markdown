@@ -1,5 +1,4 @@
 ---
-layout: post
 title:  "Gaussian processes for physics (1)"
 date:   2017-07-05 15:00:00 -0500
 categories: projects

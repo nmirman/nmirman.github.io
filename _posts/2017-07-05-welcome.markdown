@@ -1,5 +1,4 @@
 ---
-layout: post
 title:  "Greetings!"
 date:   2017-07-05 10:23:48 -0500
 categories: projects

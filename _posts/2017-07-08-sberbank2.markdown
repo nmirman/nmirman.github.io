@@ -1,5 +1,4 @@
 ---
-layout: post
 title:  "Russian Housing Market (2)"
 date:   2017-07-08 19:12:44 -0500
 categories: projects
