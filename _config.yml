@@ -8,9 +8,9 @@
 # Site Settings
 theme                    : "minimal-mistakes-jekyll"
 locale                   : "en"
-title                    : ""
+title                    : "Nathan Mirman"
 title_separator          : "-"
-name                     : "Nathan Mirman"
+name                     : 
 description              : 
 url                      : "http://nathanmirman.com" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
@@ -79,9 +79,9 @@ analytics:
 # Site Author
 author:
   name             : "Nathan Mirman"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "My thoughts on physics, machine learning, big data."
-  location         :
+  avatar           : "/assets/images/bio-photo.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "Cornell University"
+  location         : "Ithaca, NY"
   email            : "nem46@cornell.edu"
   uri              : 
   bitbucket        :
@@ -180,7 +180,7 @@ timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins (previously gems:)
-plugins:
+plugins_dir:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
@@ -242,7 +242,7 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
-      comments: # true
-      share: true
+      read_time: false # true
+      comments: true
+      share: false # true
       related: true

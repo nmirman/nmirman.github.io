@@ -8,6 +8,6 @@ In [part 1]({{ site.baseurl }}{% link _posts/2017-07-05-gp1.markdown %}) of this
 
 First, I'll tell you what's going on in this plot:
 
-{% include image.html url="/assets/GP/gp_randGlarge.pdf" %}{:width="400px" %}
+{% include image.html url="/assets/images/GP/gp_randGlarge.pdf" %}{:width="400px" %}
 
 These are functions randomly drawn from a prior distribution of functions.  They have a characteristic *amplitude*, and a characteristic *lengthscale* of variations.  These properties are determined entirely by the function prior.

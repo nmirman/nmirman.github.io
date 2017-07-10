@@ -4,7 +4,7 @@ date:   2017-07-08 15:27:48 -0500
 categories: projects
 ---
 
-{% include image.html url="/assets/P9110095_2.jpg" description="<em>Viktor Pivovarov, 1994</em>" %}{:width="350px" %}
+{% include image.html url="/assets/images/P9110095_2.jpg" description="<em>Viktor Pivovarov, 1994</em>" %}{:width="350px" %}
 
 &nbsp;
 
@@ -56,13 +56,13 @@ A quick look at the dataset reveals a number of entries with missing features, t
 
 We begin by looking at how the *price* of a property depends on its *location*.
 
-![png](/assets/Sberbank_files/Sberbank_6_0.png)
+![png](/assets/images/Sberbank_files/Sberbank_6_0.png)
 
 There is a significant variation in the median price by location, as we can see by the nine quantiles color-coded in the map above.  The most expensive properties are located near the city center and to its West, with a median price around nine million rubles.  The median price generally decreases as we move away from the center, where it falls below five million rubles.
 
 Distributions of the *price* and *floor area* of the properties are shown below.  The *floor area* is one of the most predictive features in the dataset, and we take advantage of that when developing our model below.
 
-![png](/assets/Sberbank_files/Sberbank_8_0.png)
+![png](/assets/images/Sberbank_files/Sberbank_8_0.png)
 
 
 ## Anomalous values
@@ -74,7 +74,7 @@ A particularly interesting example of anomalous values occurs in investment prop
 ### Example: investment sale prices
 An interesting artifact shows up if we look at the low end of the price spectrum for sales marked as "Investment" rather than "Owner-Occupier".  There seems to be an excess of sales with prices of exactly 1, 2, or 3 million rubles.
 
-![png](/assets/Sberbank_files/Sberbank_10_0.png)
+![png](/assets/images/Sberbank_files/Sberbank_10_0.png)
 
 It turns out that prices are sometimes artificially reduced in investment purchases for tax purposes.  That means that the "true" price of these properties may be significantly higher.
 

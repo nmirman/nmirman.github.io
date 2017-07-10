@@ -25,7 +25,7 @@ where $$ \Delta d_i $$ is the distance between the properties (in degrees latitu
 
 We conduct the interpolation for investment and owner-occupier properties separately -- that way, the anomalous investment prices don't affect the owner-occupier price interpolation.  Calculating the interpolated *price/floor area* for each property gives us the map below:
 
-![png](/assets/Sberbank_files/Sberbank_25_0.png)
+![png](/assets/images/Sberbank_files/Sberbank_25_0.png)
 
 
 We can see a general trend of decreasing *price/floor area* as we move away from the city center.  (At the very center, we seem to have some very inexpensive apartments.  This is just another anomaly in the data, caused by properties that are erroneously located at the Kremlin!)
@@ -39,7 +39,7 @@ We determine the optimal *hyperparameter* values using a 10-fold cross validatio
 
 To see which features are the most predictive, we can look at their F-scores:
 
-![png](/assets/Sberbank_files/Sberbank_32_1.png)
+![png](/assets/images/Sberbank_files/Sberbank_32_1.png)
 
 Here are the scores for the top twenty features:
 
@@ -79,7 +79,7 @@ $$ r = \frac{y_{pred} - y_{true}}{y_{true}} $$,
 
 where $$r$$ is the residual, $$ y_{pred} $$ is the predicted price, and $$ y_{true} $$ is the true price.
 
-![png](/assets/Sberbank_files/Sberbank_39_1.png)
+![png](/assets/images/Sberbank_files/Sberbank_39_1.png)
 
 Most of the residuals are between -1 and 1, as expected.  However, there is a large tail going into values up to 15.  This is to be investigated further -- it probably has to do with the anomalous investment sale prices.
 
@@ -87,7 +87,7 @@ In the independent test set, our *root mean square error* is about 2.7 million r
 
 Let's look at the dependence of the residuals on some of the main features of our model.
 
-![png](/assets/Sberbank_files/Sberbank_41_0.png)
+![png](/assets/images/Sberbank_files/Sberbank_41_0.png)
 
 These plots show no major correlations, which indicates that the XGBoost model is reasonably unbiased as a function of these variables, and captures most of the available statistical information.  The plot of *residuals* versus *interpolated price* (lower right) may have some subtle structure -- perhaps something to be investigated further.
 
