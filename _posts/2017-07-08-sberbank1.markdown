@@ -1,5 +1,5 @@
 ---
-title:  "Russian Housing Market (1)"
+title:  "Russian Housing Market Data (1)"
 date:   2017-07-08 15:27:48 -0500
 excerpt: "Sberbank has released a dataset of real estate sales in Moscow, Russia.  Let's see if we can use it to predict housing prices!"
 ---
