@@ -1,10 +1,13 @@
 ---
 title:  "Gaussian processes for physics (1)"
 date:   2017-07-05 15:00:00 -0500
-categories: projects
+excerpt: Gaussian processes are perhaps the best kept secret in machine learning.  We'll talk about how they can be used for nonparametric regression.
 ---
 
-{% include image.html url="/assets/images/GP/gp_crop.pdf" %}{:width="400px" %}
+&nbsp;
+
+![pdf](/assets/images/GP/gp_crop.pdf)
+
 &nbsp;
 
 Back in 2014, my [thesis project](https://arxiv.org/abs/1704.06142) was just in its infancy.  The goal was to measure the mass of the *top quark* by analyzing its decay pattern as observed in the [CMS detector](https://cms.cern).  This type of mass measurement had been done before, but we had a few ideas on how to improve the precision by about 25%.
@@ -15,7 +18,9 @@ Gaussian processes have experienced somewhat of a revival in science and enginee
 
 Here's the short version of my modeling problem:
 
-{% include image.html url="/assets/images/GP/sensitivity_mt_mbl.pdf" description="<em>arXiv:1704.06142</em>" %}{:width="500px" %}
+![pdf](/assets/images/GP/sensitivity_mt_mbl.pdf)
+
+<em>arXiv:1704.06142</em>
 &nbsp;
 
 Ignoring the red line for now (I'll talk about it in a later post!), note the evolution of the gray shape as we increase the $$ M_t^{MC} $$ parameter.  That parameter is the top quark mass, and the gray distribution slowly shifts to the right as the mass increases.  This dependence allows us to precisely determine the value of the top quark mass using Large Hadron Collider data.  In order to take advantage of this dependence, we need to model the *shape* of this distribution, as well as its *dependence* on the $$ M_t^{MC} $$ parameter.  We do this modeling using Monte Carlo simulation data.  Then, this information goes into a Maximum Likelihood fit, where the value of $$ M_t^{MC} $$ most consistent with the empirical data is determined.

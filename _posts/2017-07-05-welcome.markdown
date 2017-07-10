@@ -1,7 +1,6 @@
 ---
 title:  "Greetings!"
 date:   2017-07-05 10:23:48 -0500
-categories: projects
 ---
 
-I'm really excited to start documenting some of my projects online.  In my first few posts, I'll talk about some applications of statistics and machine learning in particle physics, which I studied as a graduate student at Cornell.  I'm also tinkering with some public datasets -- updates will be coming soon!
+I'm really excited to start documenting some of my projects online.  In my first few posts, I'll talk about some applications of statistics and machine learning in particle physics, which I studied as a PhD student at Cornell.  I'm also tinkering with some public datasets -- updates will be coming soon!

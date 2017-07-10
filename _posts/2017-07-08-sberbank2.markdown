@@ -2,7 +2,6 @@
 title:  "Russian Housing Market (2)"
 date:   2017-07-08 19:12:44 -0500
 excerpt: "We're ready to do some modeling using features from the Sberbank dataset.  We conduct a spatial interpolation and gradient tree boosting."
-categories: projects
 ---
 
 Welcome back!  In the [previous post]({{ site.baseurl }}{% link _posts/2017-07-08-sberbank1.markdown %}), we introduced the [Sberbank Russian Housing Market](https://www.kaggle.com/c/sberbank-russian-housing-market) dataset hosted on Kaggle, and talked about some of the main features (and interesting anomalies!) in the dataset.  Now we're ready to do some modeling using these features.  Continue reading below, or find more details in [this jupyter notebook](https://github.com/nmirman/sberbank/blob/master/analysis/Sberbank.ipynb).

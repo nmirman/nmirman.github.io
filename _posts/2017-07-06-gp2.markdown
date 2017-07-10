@@ -1,13 +1,58 @@
 ---
 title:  "Gaussian processes for physics (2)"
 date:   2017-07-06 12:00:00 -0500
-categories: projects
+gallery:
+   - image_path: /assets/images/GP/gp_randGlarge.pdf
+   - image_path: /assets/images/GP/gp_randGsmall.pdf
+gallery2:
+   - image_path: /assets/images/GP/gp_randexp.pdf
+   - image_path: /assets/images/GP/gp_randxy.pdf
+gallery3:
+   - image_path: /assets/images/GP/gp_1mod.pdf
+   - image_path: /assets/images/GP/gp_2mod.pdf
+   - image_path: /assets/images/GP/gp_3mod.pdf
+excerpt: In this post, we continue talking about Gaussian processes with a few illustrations and a look at some of the underlying theory.
 ---
 
 In [part 1]({{ site.baseurl }}{% link _posts/2017-07-05-gp1.markdown %}) of this post, I talked about an application for Gaussian processes in my [thesis project](https://arxiv.org/abs/1704.06142).  Let's continue with some of the theory behind GPs.
 
 First, I'll tell you what's going on in this plot:
 
-{% include image.html url="/assets/images/GP/gp_randGlarge.pdf" %}{:width="400px" %}
+![pdf](/assets/images/GP/gp_randGlarge.pdf)
 
-These are functions randomly drawn from a prior distribution of functions.  They have a characteristic *amplitude*, and a characteristic *lengthscale* of variations.  These properties are determined entirely by the function prior.
+These are functions randomly drawn from a prior distribution of functions.  They have a characteristic *amplitude*, and a characteristic *lengthscale* of variations.  These properties are determined entirely by the Gaussian process prior.
+
+The Gaussian process prior determines which values the function $$ f(u_i) $$ can have at any given point $$ u_i $$.  The possible values $$ f(u_i) $$ are restricted partially by the allowed *amplitude* of the function, and partially by the values of $$ f(u) $$ at the neighboring points $$ u_{i-1}, u_{i+1} $$, etc.  In this way, the Gaussian process behaves like an interpolation, where the value of the function at each point $$ u_i $$ is determined by nearby points.
+
+Mathematically, the Gaussian process prior is a multidimensional Gaussian distribution.  The covariance matrix corresponding to the prior distribution determines the degree to which neighboring values of $$ f(u) $$ are *correlated*.  The covariance corresponding to the Gaussian process shapes above is given by a Gaussian function:
+
+$$ \mathrm{cov}( f(u_i), f(u_j) ) = \theta_0 \exp\left[-\frac{1}{2\theta_1^2}(u_i - u_j)^2\right] $$,
+
+where the *hyperparameters* $$ \theta_0 $$ and $$ \theta_1 $$ control the *amplitude* and the *lengthscale* of variations.  By changing the values of the hyperparameters, or the functional form of $$ \mathrm{cov}( f(u_i), f(u_j) ) $$, we can change the behavior of the corresponding Gaussian process.
+
+{% include gallery %}
+
+{% include gallery id="gallery2" %}
+
+Pretty cool, huh?  These shapes are all drawn using a random number generator.  Their properties are entirely determined by the covariance function that we choose, which is listed on the upper right-hand corner of each plot.
+
+## Regression using Gaussian processes
+
+We can generate random shapes, but how is that useful for regression?  The key to GP regression again lies in the prior distribution.  In the plots above, we randomly selected shapes out of the prior.  For regression, we need to select only shapes that pass through a set of *training points*.
+
+This is described beautifully in Christopher Bishop's *Pattern Recognition and Machine Learning*.  In the book, there's an illustration that looks kind of like this:
+
+![pdf](/assets/images/GP/gp_schematic.pdf)
+
+Here we are looking at the correlation in function values between a *training point*, $$ u_{train} $$, and a *test point*, $$ u_{test} $$.  The Gaussian process prior distribution is represented by the red ellipse.  In a regression problem, the value of $$ f(u) $$ at the training point is known, and we must constrain the Gaussian process shape to that value.  This constraint is represented by the blue horizontal line.  Given this constraint, we can investigate the possible values of the shape at any test point $$ u_{test} $$.  In the illustration, those possible values are represented by the one-dimensional Gaussian distribution in blue.  If we follow a procedure like this for *every* training point, we will have a regression!
+
+In the parlance of linear alebra, what we have just described is called *conditioning*, and the blue one-dimensional Gaussian in the illustration is the *conditional distribution* or *posterior distribution* for the Gaussian process.  This means that we can easily find the mean and variance of the resulting regression, with only a few matrix multiplications (and one matrix inversion) required.
+
+We'll skip some of the more technical details, but a brief overview is given [here]() in Appendix B.  Here's what the process looks like graphically:
+
+{% include gallery id="gallery3" %}
+
+In **Step 1**, we begin with the Gaussian process prior distribution.  In **Step 2**, the GP shapes corresponding to the prior are constrained to pass through a set of training points.  In **Step 3**, we find the *mean* and *variance* of the resulting posterior shape.  Mission accomplished!
+
+Although we've left out a few technical details, coding up a Gaussian process regression is actually remarkably simple and elegant.  In a later post, I'll share some Python code that I used to explore Gaussian processes for my research.  Until then, I highly recommend checking out *Pattern Recognition and Machine Learning* by Christopher Bishop, or [*Gaussian Processes for Machine Learning*](http://www.gaussianprocess.org/gpml/) by Carl Rasmussen and Christopher Williams.
+
